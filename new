@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+lastday=$(find . -type d -regex '\./day[0-9]+' | grep -o '[0-9]*' | sort -n | tail -1)
+newday=$(printf "%02d" $(( lastday + 1 )))
+
+cp -r "template" "day$newday"
+cd "day$newday"
