@@ -25,3 +25,13 @@ func RemoveIndex(s []int, index int) []int {
 	ret = append(ret, s[:index]...)
 	return append(ret, s[index+1:]...)
 }
+
+func MustAtoi(s string) int {
+	n, err := strconv.Atoi(s)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return n
+}
