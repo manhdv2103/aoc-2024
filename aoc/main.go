@@ -67,27 +67,38 @@ func getInput(day string) string {
 	inputFile, err := os.ReadFile("input")
 
 	if errors.Is(err, os.ErrNotExist) {
-		cookie := getCookie()
-		out, err := exec.Command(
-			"curl",
-			"-b",
-			cookie,
-			"-A",
-			"curl by manhdv2103@gmail.com",
-			"https://adventofcode.com/2024/day/"+day+"/input",
-		).Output()
-
-		if err != nil {
-			panic(err)
-		}
-
-		os.WriteFile("input", out, 0644)
-		return string(out)
+		return downloadInput(day)
 	} else if err != nil {
 		panic(err)
 	}
 
-	return string(inputFile)
+	input := string(inputFile)
+	if input == "" {
+		return downloadInput(day)
+	}
+
+	return input
+}
+
+func downloadInput(day string) string {
+	fmt.Println("Downloading input...")
+
+	cookie := getCookie()
+	out, err := exec.Command(
+		"curl",
+		"-b",
+		cookie,
+		"-A",
+		"curl by manhdv2103@gmail.com",
+		"https://adventofcode.com/2024/day/"+day+"/input",
+	).Output()
+
+	if err != nil {
+		panic(err)
+	}
+
+	os.WriteFile("input", out, 0644)
+	return string(out)
 }
 
 func getCookie() string {
