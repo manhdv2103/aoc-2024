@@ -35,3 +35,23 @@ func MustAtoi(s string) int {
 
 	return n
 }
+
+func MustAtoi64(s string) int64 {
+	n, err := strconv.ParseInt(s, 10, 64)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return n
+}
+
+func MustAtou64(s string) uint64 {
+	n, err := strconv.ParseUint(s, 10, 64)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return n
+}
