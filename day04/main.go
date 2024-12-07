@@ -19,14 +19,14 @@ func solveP1(input string) string {
 	wordBoard := parseInput(input)
 
 	directions := []direction{
-		direction{1, 0},
-		direction{1, 1},
-		direction{0, 1},
-		direction{-1, 1},
-		direction{-1, 0},
-		direction{-1, -1},
-		direction{0, -1},
-		direction{1, -1},
+		{1, 0},
+		{1, 1},
+		{0, 1},
+		{-1, 1},
+		{-1, 0},
+		{-1, -1},
+		{0, -1},
+		{1, -1},
 	}
 
 	count := 0
@@ -57,13 +57,13 @@ func solveP2(input string) string {
 	wordBoard := parseInput(input)
 
 	diagonal1Directions := []direction{
-		direction{1, 1},
-		direction{-1, -1},
+		{1, 1},
+		{-1, -1},
 	}
 
 	diagonal2Directions := []direction{
-		direction{-1, 1},
-		direction{1, -1},
+		{-1, 1},
+		{1, -1},
 	}
 
 	count := 0
