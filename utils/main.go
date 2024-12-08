@@ -55,3 +55,14 @@ func MustAtou64(s string) uint64 {
 
 	return n
 }
+
+type Point struct {
+	X int
+	Y int
+}
+
+func InBounds(point Point, width int, height int) bool {
+	return point.X >= 0 && point.X < width && point.Y >= 0 && point.Y < height
+}
+
+type Set[T comparable] map[T]bool
