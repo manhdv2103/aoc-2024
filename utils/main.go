@@ -9,6 +9,20 @@ func AbsInt(x int) int {
 	return x
 }
 
+func MaxInt(a int, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func MinInt(a int, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
 func ToInts(strs []string) []int {
 	ints := make([]int, 0)
 	for _, str := range strs {
