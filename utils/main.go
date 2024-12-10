@@ -79,4 +79,11 @@ func InBounds(point Point, width int, height int) bool {
 	return point.X >= 0 && point.X < width && point.Y >= 0 && point.Y < height
 }
 
+func AddPoint(a Point, b Point) Point {
+	return Point{
+		X: a.X + b.X,
+		Y: a.Y + b.Y,
+	}
+}
+
 type Set[T comparable] map[T]bool
