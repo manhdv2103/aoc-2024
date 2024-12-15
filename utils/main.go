@@ -86,4 +86,15 @@ func AddPoint(a Point, b Point) Point {
 	}
 }
 
+func RotatePoint(point Point) Point {
+	return Point{X: -point.Y, Y: point.X}
+}
+
 type Set[T comparable] map[T]bool
+
+var Directions = []Point{
+	{X: 0, Y: 1},
+	{X: 1, Y: 0},
+	{X: 0, Y: -1},
+	{X: -1, Y: 0},
+}
