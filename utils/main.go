@@ -1,6 +1,9 @@
 package utils
 
-import "strconv"
+import (
+	"regexp"
+	"strconv"
+)
 
 func AbsInt(x int) int {
 	if x < 0 {
@@ -70,6 +73,16 @@ func MustAtou64(s string) uint64 {
 	return n
 }
 
+func MustParseFloat(s string) float64 {
+	n, err := strconv.ParseFloat(s, 64)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return n
+}
+
 type Point struct {
 	X int
 	Y int
@@ -97,4 +110,10 @@ var Directions = []Point{
 	{X: 1, Y: 0},
 	{X: 0, Y: -1},
 	{X: -1, Y: 0},
+}
+
+var numsRegex = regexp.MustCompile(`\d+`)
+
+func ExtractNumStrings(s string) []string {
+	return numsRegex.FindAllString(s, -1)
 }
