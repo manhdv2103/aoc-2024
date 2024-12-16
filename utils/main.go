@@ -111,6 +111,10 @@ func RotatePoint(point Point) Point {
 	return Point{X: -point.Y, Y: point.X}
 }
 
+func InversePoint(point Point) Point {
+	return Point{X: -point.X, Y: -point.Y}
+}
+
 func Distance(a, b Point) float64 {
 	return math.Sqrt(math.Pow(float64(a.X-b.X), 2) + math.Pow(float64(a.Y-b.Y), 2))
 }
@@ -139,4 +143,11 @@ func Mod(x, d int) int {
 		return x - d
 	}
 	return x + d
+}
+
+func Ternary[T any](cond bool, a T, b T) T {
+	if cond {
+		return a
+	}
+	return b
 }
