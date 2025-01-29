@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"strconv"
 	"strings"
 
@@ -66,48 +65,54 @@ func solveP2(input string) string {
 	width := 101
 	height := 103
 
-	lowestMinDistanceScore := math.Inf(1)
+	highestMaxRobotGroupCount := 0
 	elapsedSecondsToMaybeDisplayChristmasTree := 0
 	maybeChristmasTreeRobotMap := make(utils.Set[point])
 	for i := range width * height {
+		robotCountMap := make(map[point]int)
 		for _, robot := range robots {
 			robot.position = utils.WrapPoint(
 				utils.AddPoint(robot.position, robot.velocity),
 				width,
 				height,
 			)
+			robotCountMap[robot.position]++
 		}
 
-		// Draws a line from 1 point to the nearest point, and from that nearest point draws a new line
-		// to its nearest point that hasn't been visited, continuing until all points are connected.
-		// Hopefully the Christmas tree is formed by a bunch of robots that are very near each other.
-		visited := make(utils.Set[*robot])
-		robot := robots[0]
-		visited[robot] = true
-		minDistanceScore := float64(0)
-		for len(visited) < len(robots) {
-			minDistance := math.Inf(1)
-			nearestRobot := robots[0]
-			for _, r := range robots {
-				if visited[r] {
+		// Hopefully the Christmas tree is formed by a bunch of robots that are next to each other
+		maxRobotGroupCount := 0
+		visited := make(utils.Set[point])
+		for _, robot := range robots {
+			if visited[robot.position] {
+				continue
+			}
+
+			robotGroupCount := 0
+			queue := []point{robot.position}
+			for len(queue) > 0 {
+				p := queue[0]
+				queue = queue[1:]
+
+				if visited[p] {
 					continue
 				}
+				visited[p] = true
 
-				prevMinDistance := minDistance
-				minDistance = math.Min(minDistance, utils.Distance(robot.position, r.position))
-				if minDistance != prevMinDistance {
-					nearestRobot = r
+				for _, direction := range utils.Directions {
+					nextPos := utils.AddPoint(p, direction)
+					if count, ok := robotCountMap[nextPos]; ok {
+						robotGroupCount += count
+						queue = append(queue, nextPos)
+					}
 				}
 			}
 
-			minDistanceScore += minDistance
-			robot = nearestRobot
-			visited[robot] = true
+			maxRobotGroupCount = utils.MaxInt(maxRobotGroupCount, robotGroupCount)
 		}
 
-		prevLowestMinDistanceScore := lowestMinDistanceScore
-		lowestMinDistanceScore = math.Min(lowestMinDistanceScore, minDistanceScore)
-		if lowestMinDistanceScore != prevLowestMinDistanceScore {
+		prevHighestMaxRobotGroupCount := highestMaxRobotGroupCount
+		highestMaxRobotGroupCount = utils.MaxInt(highestMaxRobotGroupCount, maxRobotGroupCount)
+		if highestMaxRobotGroupCount != prevHighestMaxRobotGroupCount {
 			elapsedSecondsToMaybeDisplayChristmasTree = i + 1
 			maybeChristmasTreeRobotMap = make(utils.Set[point])
 			for _, robot := range robots {
