@@ -27,6 +27,22 @@ func MinInt(a int, b int) int {
 	return b
 }
 
+func PowInt(a, b int) int {
+	if b == 0 {
+		return 1
+	}
+
+	if b == 1 {
+		return a
+	}
+
+	result := a
+	for i := 2; i <= b; i++ {
+		result *= a
+	}
+	return result
+}
+
 func ToInts(strs []string) []int {
 	ints := make([]int, 0)
 	for _, str := range strs {
