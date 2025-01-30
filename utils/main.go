@@ -135,6 +135,10 @@ func Distance(a, b Point) float64 {
 	return math.Sqrt(math.Pow(float64(a.X-b.X), 2) + math.Pow(float64(a.Y-b.Y), 2))
 }
 
+func ManhattanDistance(a, b Point) int {
+	return AbsInt(a.X-b.X) + AbsInt(a.Y-b.Y)
+}
+
 type Set[T comparable] map[T]bool
 
 var Directions = []Point{
