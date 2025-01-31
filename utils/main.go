@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"maps"
 	"math"
 	"regexp"
 	"strconv"
@@ -140,6 +141,35 @@ func ManhattanDistance(a, b Point) int {
 }
 
 type Set[T comparable] map[T]bool
+
+func Union[T comparable](a Set[T], b Set[T]) Set[T] {
+	res := maps.Clone(a)
+	for k, v := range b {
+		if v {
+			res[k] = true
+		}
+	}
+
+	return res
+}
+
+func Intersect[T comparable](a Set[T], b Set[T]) Set[T] {
+	res := maps.Clone(a)
+	maps.DeleteFunc(res, func(k T, v bool) bool {
+		return !b[k]
+	})
+
+	return res
+}
+
+func Difference[T comparable](a Set[T], b Set[T]) Set[T] {
+	res := maps.Clone(a)
+	maps.DeleteFunc(res, func(k T, v bool) bool {
+		return b[k]
+	})
+
+	return res
+}
 
 var Directions = []Point{
 	{X: 0, Y: 1},
